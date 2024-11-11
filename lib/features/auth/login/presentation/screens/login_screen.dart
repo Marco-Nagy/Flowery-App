@@ -7,7 +7,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        title: const Text('Login'),
       ),
       body: Center(
         child: Column(
@@ -17,7 +17,7 @@ class LoginScreen extends StatelessWidget {
               onChanged: (value) {
                 // Handle username input
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Username',
               ),
             ),
@@ -25,7 +25,7 @@ class LoginScreen extends StatelessWidget {
               onChanged: (value) {
                 // Handle password input
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Password',
               ),
             ),
@@ -34,7 +34,7 @@ class LoginScreen extends StatelessWidget {
                 // Handle login button press
                 // Perform authentication or redirect to the main app
               },
-              child: Text('Login'),
+              child: const Text('Login'),
             ),
           ],
         ),
