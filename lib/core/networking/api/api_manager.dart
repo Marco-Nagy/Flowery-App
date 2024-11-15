@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flowery_e_commerce/core/networking/common/api_result.dart';
 import 'package:flowery_e_commerce/features/auth/data/models/response/login_response_dto.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/error_logger.dart';
