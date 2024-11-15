@@ -11,10 +11,10 @@ import '../../../domain/use_cases/auth_use_case.dart';
 part 'login_view_model_state.dart';
 
 @injectable
-class LoginViewModelCubit extends Cubit<LoginViewModelState> {
+class LoginViewModel extends Cubit<LoginViewModelState> {
   final AuthUseCase _authUseCase;
 
-  LoginViewModelCubit(this._authUseCase) : super(LoginViewModelInitial());
+  LoginViewModel(this._authUseCase) : super(LoginViewModelInitial());
 
   void doAction(LoginScreenAction action) {
     switch (action) {

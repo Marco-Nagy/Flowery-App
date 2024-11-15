@@ -49,6 +49,7 @@ dependencies:
   flutter_hooks: ^0.20.5
   equatable: ^2.0.5
   shimmer: ^3.0.0
+  fluttertoast: ^8.2.8
 
 
   # add injectable to your dependencies
