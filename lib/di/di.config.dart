@@ -20,6 +20,8 @@ import '../features/auth/data/data_sources/contracts/auth_online_data_source.dar
     as _i901;
 import '../features/auth/data/data_sources/impl/auth_online_data_source_impl.dart'
     as _i326;
+import '../features/auth/data/repositories/auth_repo_impl.dart' as _i990;
+import '../features/auth/domain/contracts/auth_repo.dart' as _i665;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -42,6 +44,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i282.ApiManager>(() => _i282.ApiManager(gh<_i361.Dio>()));
     gh.factory<_i901.AuthOnlineDataSource>(
         () => _i326.AuthOnlineDataSourceImpl(gh<_i282.ApiManager>()));
+    gh.factory<_i665.AuthRepository>(
+        () => _i990.AuthRepositoryImpl(gh<_i901.AuthOnlineDataSource>()));
     return this;
   }
 }
