@@ -7,7 +7,7 @@ class LoginRequestDto {
   final String? email;
   final String? password;
 
-  LoginRequestDto(this.email, this.password);
+  LoginRequestDto({this.email, this.password});
 
   factory LoginRequestDto.fromJson(Map<String, dynamic> json) =>
       _$LoginRequestDtoFromJson(json);

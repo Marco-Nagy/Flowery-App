@@ -16,6 +16,10 @@ import 'package:injectable/injectable.dart' as _i526;
 import '../core/networking/api/api_manager.dart' as _i282;
 import '../core/networking/common/regestet_context_module.dart' as _i125;
 import '../core/networking/network_factory.dart' as _i377;
+import '../features/auth/data/data_sources/contracts/auth_online_data_source.dart'
+    as _i901;
+import '../features/auth/data/data_sources/impl/auth_online_data_source_impl.dart'
+    as _i326;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -36,6 +40,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => registerModule.navigatorKey);
     gh.lazySingleton<_i361.Dio>(() => networkFactory.provideDio());
     gh.singleton<_i282.ApiManager>(() => _i282.ApiManager(gh<_i361.Dio>()));
+    gh.factory<_i901.AuthOnlineDataSource>(
+        () => _i326.AuthOnlineDataSourceImpl(gh<_i282.ApiManager>()));
     return this;
   }
 }
