@@ -9,9 +9,14 @@ import '../entities/response/login_response_entity.dart';
 class AuthUseCase {
   final AuthRepository _authRepository;
 
+  @factoryMethod
   AuthUseCase(this._authRepository);
 
   Future<ApiResult<LoginResponseEntity>> login(
-          LoginRequestEntity request) async =>
-      await _authRepository.login(request);
+      LoginRequestEntity request) async {
+    print("thirrrrrrrrrrrrrrrrrd");
+    return await _authRepository.login(request);
+  }
+
+// await _authRepository.login(request);
 }

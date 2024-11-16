@@ -14,13 +14,13 @@ part 'login_view_model_state.dart';
 class LoginViewModel extends Cubit<LoginViewModelState> {
   final AuthUseCase _authUseCase;
 
+  @factoryMethod
   LoginViewModel(this._authUseCase) : super(LoginViewModelInitial());
 
   void doAction(LoginScreenAction action) {
     switch (action) {
       case LoginAction():
         _login(action);
-        break;
     }
   }
 
@@ -30,10 +30,8 @@ class LoginViewModel extends Cubit<LoginViewModelState> {
     switch (result) {
       case Success<LoginResponseEntity>():
         emit(LoginViewModelSuccess(result.data));
-        break;
       case Fail<LoginResponseEntity>():
         emit(LoginViewModelError(ErrorHandler.handle(result.exception!)));
-        break;
     }
   }
 }

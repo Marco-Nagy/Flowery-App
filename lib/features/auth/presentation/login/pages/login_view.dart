@@ -1,8 +1,10 @@
 import 'package:flowery_e_commerce/core/styles/colors/my_colors.dart';
 import 'package:flowery_e_commerce/core/styles/fonts/my_fonts.dart';
+import 'package:flowery_e_commerce/core/utils/validators.dart';
 import 'package:flowery_e_commerce/core/utils/widgets/base/base_view.dart';
 import 'package:flowery_e_commerce/core/utils/widgets/base/custom_app_bar.dart';
 import 'package:flowery_e_commerce/core/utils/widgets/buttons/carved_button.dart';
+import 'package:flowery_e_commerce/core/utils/widgets/custom_toast.dart';
 import 'package:flowery_e_commerce/core/utils/widgets/spacing.dart';
 import 'package:flowery_e_commerce/di/di.dart';
 import 'package:flowery_e_commerce/features/auth/domain/entities/request/login_request_entity.dart';
@@ -25,6 +27,8 @@ class _LoginViewState extends State<LoginView> {
   late TextEditingController passwordController;
   late LoginViewModel viewModel;
 
+  final formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     emailController = TextEditingController();
@@ -43,80 +47,111 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<LoginViewModel>(
-      create: (context) => viewModel,
-      child: BaseView(
-          child: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: CustomAppBar(appBarTxt: "Login"),
-          ),
-          SliverToBoxAdapter(
-            child: verticalSpacing(30),
-          ),
-          SliverToBoxAdapter(
-              child: CustomTextFormField(
-            controller: emailController,
-            hintText: "Enter your email",
-            labelText: "Email",
-          )),
-          SliverToBoxAdapter(
-            child: verticalSpacing(30),
-          ),
-          SliverToBoxAdapter(
-              child: CustomTextFormField(
-            controller: emailController,
-            hintText: "Enter your password",
-            labelText: "Password",
-          )),
-          SliverToBoxAdapter(
-            child: verticalSpacing(16),
-          ),
-          SliverToBoxAdapter(
-              child: Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                RememberMeWidget(onChanged: (value) {}),
-                Text(
-                  'Forget Password?',
-                  style: MyFonts.styleRegular400_12.copyWith(
-                    color: MyColors.black,
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
-              ],
-            ),
-          )),
-          SliverToBoxAdapter(
-            child: verticalSpacing(70),
-          ),
-          BlocBuilder<LoginViewModel, LoginViewModelState>(
-              builder: (context, state) {
-            return SliverToBoxAdapter(
-                child: CurvedButton(
-              color: MyColors.primary,
-              title: "Login",
-              onTap: () {
-                viewModel.doAction(LoginAction(LoginRequestEntity(
-                    email: emailController.text.trim(),
-                    password: passwordController.text.trim())));
-              },
-            ));
-          }),
-          SliverToBoxAdapter(
-            child: verticalSpacing(16),
-          ),
-          SliverToBoxAdapter(
-              child: CurvedButton(
-            color: MyColors.white,
-            title: "Continue as guest",
-            onTap: () {},
-            colorBorderSide: MyColors.gray,
-            textColor: MyColors.gray,
-          )),
-        ],
-      )),
-    );
+        create: (context) => viewModel,
+        child: BlocConsumer<LoginViewModel, LoginViewModelState>(
+          buildWhen: (previous, current) => current is LoginViewModelInitial,
+          builder: (context, state) {
+            switch (state) {
+              case LoginViewModelInitial():
+              default:
+                {
+                  return BaseView(
+                      child: CustomScrollView(
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: CustomAppBar(appBarTxt: "Login"),
+                      ),
+                      SliverToBoxAdapter(
+                        child: verticalSpacing(30),
+                      ),
+                      SliverToBoxAdapter(
+                          child: Form(
+                        key: formKey,
+                        child: Column(
+                          children: [
+                            CustomTextFormField(
+                              validator: (value) {
+                                return Validators.validateEmail(value);
+                              },
+                              controller: emailController,
+                              hintText: "Enter your email",
+                              labelText: "Email",
+                            ),
+                            verticalSpacing(30),
+                            CustomTextFormField(
+                              validator: (value) {
+                                return Validators.validatePassword(value);
+                              },
+                              controller: passwordController,
+                              hintText: "Enter your password",
+                              labelText: "Password",
+                            )
+                          ],
+                        ),
+                      )),
+                      SliverToBoxAdapter(
+                        child: verticalSpacing(16),
+                      ),
+                      SliverToBoxAdapter(
+                          child: Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            RememberMeWidget(onChanged: (value) {}),
+                            Text(
+                              'Forget Password?',
+                              style: MyFonts.styleRegular400_12.copyWith(
+                                color: MyColors.black,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )),
+                      SliverToBoxAdapter(
+                        child: verticalSpacing(70),
+                      ),
+                      SliverToBoxAdapter(
+                          child: CurvedButton(
+                        color: MyColors.primary,
+                        title: "Login",
+                        onTap: () {
+                          if (formKey.currentState!.validate()) {
+                            viewModel.doAction(LoginAction(LoginRequestEntity(
+                                email: emailController.text.trim(),
+                                password: passwordController.text.trim())));
+                          }
+                        },
+                      )),
+                      SliverToBoxAdapter(
+                        child: verticalSpacing(16),
+                      ),
+                      SliverToBoxAdapter(
+                          child: CurvedButton(
+                        color: MyColors.white,
+                        title: "Continue as guest",
+                        onTap: () {},
+                        colorBorderSide: MyColors.gray,
+                        textColor: MyColors.gray,
+                      )),
+                    ],
+                  ));
+                }
+            }
+          },
+          listener: (context, state) {
+            switch (state) {
+              case LoginViewModelLoading():
+                CustomToast.showLoadingToast(message: "Loading...");
+              case LoginViewModelSuccess():
+                CustomToast.showSuccessToast(message: "Success");
+              case LoginViewModelError():
+                debugPrint(state.errorMessage.error);
+                CustomToast.showErrorToast(message: state.errorMessage.error!);
+              default:
+            }
+          },
+        ));
   }
 }

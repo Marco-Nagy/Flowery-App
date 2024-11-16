@@ -1,3 +1,4 @@
+import 'package:flowery_e_commerce/core/styles/colors/my_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -26,7 +27,7 @@ class CustomToast {
   static void showLoadingToast({required String message}) {
     showToast(
       message: message,
-      backgroundColor: Colors.blueAccent,
+      backgroundColor: MyColors.primary,
       gravity: ToastGravity.BOTTOM,
       icon: Icons.hourglass_bottom,
     );

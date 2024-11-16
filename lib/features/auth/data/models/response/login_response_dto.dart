@@ -6,8 +6,9 @@ part 'login_response_dto.g.dart';
 class LoginResponseDto {
   final String? message;
   final String? token;
+  final String? error;
 
-  LoginResponseDto(this.message, this.token);
+  LoginResponseDto(this.message, this.token, this.error);
 
   factory LoginResponseDto.fromJson(Map<String, dynamic> json) =>
       _$LoginResponseDtoFromJson(json);
