@@ -1,19 +1,13 @@
-import 'package:flowery_e_commerce/core/styles/colors/my_colors.dart';
-import 'package:flowery_e_commerce/core/styles/fonts/my_fonts.dart';
-import 'package:flowery_e_commerce/core/utils/validators.dart';
-import 'package:flowery_e_commerce/core/utils/widgets/base/base_view.dart';
 import 'package:flowery_e_commerce/core/utils/widgets/base/custom_app_bar.dart';
-import 'package:flowery_e_commerce/core/utils/widgets/buttons/carved_button.dart';
-import 'package:flowery_e_commerce/core/utils/widgets/custom_toast.dart';
 import 'package:flowery_e_commerce/core/utils/widgets/spacing.dart';
-import 'package:flowery_e_commerce/di/di.dart';
-import 'package:flowery_e_commerce/features/auth/domain/entities/request/login_request_entity.dart';
-import 'package:flowery_e_commerce/features/auth/presentation/login/manager/login_action.dart';
-import 'package:flowery_e_commerce/features/auth/presentation/login/manager/login_view_model_cubit.dart';
-import 'package:flowery_e_commerce/features/auth/presentation/login/widgets/custom_text_form_field.dart';
-import 'package:flowery_e_commerce/features/auth/presentation/login/widgets/remember_me_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flowery_e_commerce/core/utils/widgets/base/base_view.dart';
+import 'package:flowery_e_commerce/core/utils/widgets/custom_toast.dart';
+import 'package:flowery_e_commerce/di/di.dart';
+import 'package:flowery_e_commerce/features/auth/presentation/login/manager/login_view_model_cubit.dart';
+import '../widgets/login_buttons.dart';
+import '../widgets/login_form.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -23,135 +17,55 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  late TextEditingController emailController;
-  late TextEditingController passwordController;
   late LoginViewModel viewModel;
-
-  final formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
-    emailController = TextEditingController();
-    passwordController = TextEditingController();
     viewModel = getIt.get<LoginViewModel>();
     super.initState();
   }
 
   @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return BlocProvider<LoginViewModel>(
-        create: (context) => viewModel,
-        child: BlocConsumer<LoginViewModel, LoginViewModelState>(
-          buildWhen: (previous, current) => current is LoginViewModelInitial,
-          builder: (context, state) {
-            switch (state) {
-              case LoginViewModelInitial():
-              default:
-                {
-                  return BaseView(
-                      child: CustomScrollView(
-                    slivers: [
-                      SliverToBoxAdapter(
-                        child: CustomAppBar(appBarTxt: "Login"),
-                      ),
-                      SliverToBoxAdapter(
-                        child: verticalSpacing(30),
-                      ),
-                      SliverToBoxAdapter(
-                          child: Form(
-                        key: formKey,
-                        child: Column(
-                          children: [
-                            CustomTextFormField(
-                              validator: (value) {
-                                return Validators.validateEmail(value);
-                              },
-                              controller: emailController,
-                              hintText: "Enter your email",
-                              labelText: "Email",
-                            ),
-                            verticalSpacing(30),
-                            CustomTextFormField(
-                              validator: (value) {
-                                return Validators.validatePassword(value);
-                              },
-                              controller: passwordController,
-                              hintText: "Enter your password",
-                              labelText: "Password",
-                            )
-                          ],
-                        ),
-                      )),
-                      SliverToBoxAdapter(
-                        child: verticalSpacing(16),
-                      ),
-                      SliverToBoxAdapter(
-                          child: Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            RememberMeWidget(onChanged: (value) {}),
-                            Text(
-                              'Forget Password?',
-                              style: MyFonts.styleRegular400_12.copyWith(
-                                color: MyColors.black,
-                                decoration: TextDecoration.underline,
-                              ),
-                            ),
-                          ],
-                        ),
-                      )),
-                      SliverToBoxAdapter(
-                        child: verticalSpacing(70),
-                      ),
-                      SliverToBoxAdapter(
-                          child: CurvedButton(
-                        color: MyColors.primary,
-                        title: "Login",
-                        onTap: () {
-                          if (formKey.currentState!.validate()) {
-                            viewModel.doAction(LoginAction(LoginRequestEntity(
-                                email: emailController.text.trim(),
-                                password: passwordController.text.trim())));
-                          }
-                        },
-                      )),
-                      SliverToBoxAdapter(
-                        child: verticalSpacing(16),
-                      ),
-                      SliverToBoxAdapter(
-                          child: CurvedButton(
-                        color: MyColors.white,
-                        title: "Continue as guest",
-                        onTap: () {},
-                        colorBorderSide: MyColors.gray,
-                        textColor: MyColors.gray,
-                      )),
-                    ],
-                  ));
-                }
-            }
-          },
-          listener: (context, state) {
-            switch (state) {
-              case LoginViewModelLoading():
-                CustomToast.showLoadingToast(message: "Loading...");
-              case LoginViewModelSuccess():
-                CustomToast.showSuccessToast(message: "Success");
-              case LoginViewModelError():
-                debugPrint(state.errorMessage.error);
-                CustomToast.showErrorToast(message: state.errorMessage.error!);
-              default:
-            }
-          },
-        ));
+      create: (context) => viewModel,
+      child: BlocConsumer<LoginViewModel, LoginViewModelState>(
+        buildWhen: (previous, current) => current is LoginViewModelInitial,
+        builder: (context, state) {
+          return BaseView(
+            child: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: CustomAppBar(appBarTxt: "Login"),
+                ),
+                SliverToBoxAdapter(
+                  child: verticalSpacing(20),
+                ),
+                LoginForm(),
+                SliverToBoxAdapter(
+                  child: verticalSpacing(70),
+                ),
+                LoginButtons(),
+              ],
+            ),
+          );
+        },
+        listener: (context, state) {
+          switch (state) {
+            case LoginViewModelLoading():
+              CustomToast.showLoadingToast(message: "Loading...");
+              break;
+            case LoginViewModelSuccess():
+              CustomToast.showSuccessToast(message: "Success");
+              break;
+            case LoginViewModelError():
+              debugPrint(state.errorMessage.error);
+              CustomToast.showErrorToast(message: state.errorMessage.error!);
+              break;
+            default:
+          }
+        },
+      ),
+    );
   }
 }
