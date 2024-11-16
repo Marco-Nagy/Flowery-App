@@ -80,9 +80,10 @@ class _LoginViewState extends State<LoginView> {
               break;
             case LoginViewModelError():
               debugPrint(state.errorMessage.error);
-              CustomToast.showErrorToast(message: state.errorMessage.error!);
-              break;
+              return CustomToast.showErrorToast(
+                  message: state.errorMessage.error!);
             default:
+              return null;
           }
         },
       ),
