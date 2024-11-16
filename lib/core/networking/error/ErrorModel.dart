@@ -4,18 +4,17 @@
 
 class ErrorModel {
   ErrorModel({
-      this.message, 
-      this.code, 
-      this.stack,});
+    this.error,
+    this.code,
+    this.stack,});
 
-
-  String? message;
+  String? error;
   int? code;
   String? stack;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['message'] = message;
+    map['error'] = error;
     map['code'] = code;
     map['stack'] = stack;
     return map;
@@ -25,7 +24,7 @@ class ErrorModel {
 
   factory ErrorModel.fromMap(Map<String, dynamic> map) {
     return ErrorModel(
-      message: map['message'] as String,
+      error: map['error'] as String,
       code: map['code'] as int,
       stack: map['stack'] as String,
     );
