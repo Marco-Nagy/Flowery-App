@@ -26,29 +26,26 @@ class CustomTextFormField extends StatefulWidget {
 class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 55,
-      child: TextFormField(
-        obscureText: widget.isPassword ?? false,
-        controller: widget.controller,
-        decoration: InputDecoration(
-          suffix: widget.suffix ?? SizedBox(),
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          labelText: '${widget.labelText ?? ''}',
-          labelStyle: MyFonts.styleRegular400_12.copyWith(color: MyColors.gray),
-          hintText: '${widget.hintText ?? ''}',
-          hintStyle:
-              MyFonts.styleRegular400_14.copyWith(color: MyColors.placeHolder),
-          border: OutlineInputBorder(),
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: MyColors.gray),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: MyColors.gray),
-          ),
+    return TextFormField(
+      obscureText: widget.isPassword ?? false,
+      controller: widget.controller,
+      decoration: InputDecoration(
+        suffix: widget.suffix ?? SizedBox(),
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        labelText: '${widget.labelText ?? ''}',
+        labelStyle: MyFonts.styleRegular400_12.copyWith(color: MyColors.gray),
+        hintText: '${widget.hintText ?? ''}',
+        hintStyle:
+            MyFonts.styleRegular400_14.copyWith(color: MyColors.placeHolder),
+        border: OutlineInputBorder(),
+        enabledBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: MyColors.gray),
         ),
-        validator: widget.validator,
+        focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: MyColors.gray),
+        ),
       ),
+      validator: widget.validator,
     );
   }
 }

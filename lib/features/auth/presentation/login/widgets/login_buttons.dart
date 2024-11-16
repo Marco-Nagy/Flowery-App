@@ -7,6 +7,16 @@ import 'package:flowery_e_commerce/features/auth/presentation/login/manager/logi
 import 'package:flowery_e_commerce/features/auth/presentation/login/manager/login_action.dart';
 
 class LoginButtons extends StatelessWidget {
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
+  final formKey;
+
+  const LoginButtons({
+    Key? key,
+    required this.emailController,
+    required this.passwordController,
+    required this.formKey,
+  });
   @override
   Widget build(BuildContext context) {
     final viewModel = context.read<LoginViewModel>();
@@ -18,12 +28,10 @@ class LoginButtons extends StatelessWidget {
             color: MyColors.primary,
             title: "Login",
             onTap: () {
-              if (Form.of(context).validate()) {
+              if (formKey.currentState!.validate()) {
                 viewModel.doAction(LoginAction(LoginRequestEntity(
-                  email: "test@example.com",
-                  // Replace with your controller's value
-                  password:
-                      "password123", // Replace with your controller's value
+                  email: emailController.text.trim(),
+                  password: passwordController.text.trim(),
                 )));
               }
             },

@@ -4,18 +4,20 @@ import 'package:flowery_e_commerce/core/utils/validators.dart';
 import 'package:flowery_e_commerce/core/styles/colors/my_colors.dart';
 
 class PasswordField extends StatefulWidget {
+  final TextEditingController passwordController;
+
+  const PasswordField({super.key, required this.passwordController});
   @override
   State<PasswordField> createState() => _PasswordFieldState();
 }
 
 class _PasswordFieldState extends State<PasswordField> {
-  final TextEditingController passwordController = TextEditingController();
   bool isPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
     return CustomTextFormField(
-      controller: passwordController,
+      controller: widget.passwordController,
       isPassword: !isPasswordVisible,
       validator: (value) => Validators.validatePassword(value),
       hintText: "Enter your password",

@@ -18,11 +18,23 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   late LoginViewModel viewModel;
+  late var emailController;
+  late var passwordController;
+  final formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     viewModel = getIt.get<LoginViewModel>();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -41,11 +53,19 @@ class _LoginViewState extends State<LoginView> {
                 SliverToBoxAdapter(
                   child: verticalSpacing(20),
                 ),
-                LoginForm(),
+                LoginForm(
+                  formKey: formKey,
+                  passwordController: passwordController,
+                  emailController: emailController,
+                ),
                 SliverToBoxAdapter(
                   child: verticalSpacing(70),
                 ),
-                LoginButtons(),
+                LoginButtons(
+                  emailController: emailController,
+                  passwordController: passwordController,
+                  formKey: formKey,
+                ),
               ],
             ),
           );

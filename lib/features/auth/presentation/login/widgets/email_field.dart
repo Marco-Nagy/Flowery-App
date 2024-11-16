@@ -3,7 +3,9 @@ import 'package:flowery_e_commerce/core/utils/validators.dart';
 import 'package:flowery_e_commerce/features/auth/presentation/login/widgets/custom_text_form_field.dart';
 
 class EmailField extends StatelessWidget {
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController emailController;
+
+  const EmailField({Key? key, required this.emailController}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

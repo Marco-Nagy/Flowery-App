@@ -4,7 +4,16 @@ import 'emember_me_and_forgot_password.dart';
 import 'password_field.dart';
 
 class LoginForm extends StatelessWidget {
-  final formKey = GlobalKey<FormState>();
+  final formKey;
+
+  const LoginForm(
+      {Key? key,
+      required this.formKey,
+      required this.emailController,
+      required this.passwordController})
+      : super(key: key);
+  final TextEditingController passwordController;
+  final TextEditingController emailController;
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +22,13 @@ class LoginForm extends StatelessWidget {
         key: formKey,
         child: Column(
           children: [
-            EmailField(),
+            EmailField(
+              emailController: emailController,
+            ),
             const SizedBox(height: 30),
-            PasswordField(),
+            PasswordField(
+              passwordController: passwordController,
+            ),
             const SizedBox(height: 16),
             RememberMeAndForgotPassword(),
           ],
