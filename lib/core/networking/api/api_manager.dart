@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:flowery_e_commerce/features/auth/data/model/request/signup_request_dto.dart';
+import 'package:flowery_e_commerce/features/auth/data/model/response/signup_response_dto.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
@@ -14,5 +16,6 @@ abstract class ApiManager {
 @factoryMethod
 factory  ApiManager(Dio dio)= _ApiManager;
 
-
+@POST(ApiConstants.registerApi)
+Future<SignUPResponseDto> signUp(@Body() SignUpRequestDto signUpRequestDto);
 }

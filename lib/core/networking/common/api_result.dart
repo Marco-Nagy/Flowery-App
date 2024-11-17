@@ -1,13 +1,15 @@
 sealed class ApiResult<T> {}
 
 class Success<T> implements ApiResult<T> {
-  T data;
+  final T? data;
 
-  Success(this.data);
-}
+  Success({this.data});
+  }
+
+
 
 class Fail<T> implements ApiResult<T> {
-  Exception? exception;
+  final Exception? exception;
 
-  Fail(this.exception);
+  Fail({this.exception});
 }

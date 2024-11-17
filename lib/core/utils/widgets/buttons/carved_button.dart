@@ -6,14 +6,14 @@ import 'package:flutter/material.dart';
 class CurvedButton extends StatelessWidget {
   const CurvedButton({
     super.key,
-    required this.color,
+     this.color,
     required this.title,
     required this.onTap,
     this.height,
     this.width,
   });
 
-  final Color color;
+  final Color? color;
   final String title;
   final VoidCallback onTap;
   final double? height;
@@ -28,7 +28,7 @@ class CurvedButton extends StatelessWidget {
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 24),
-          backgroundColor: color,
+          backgroundColor:color ?? MyColors.baseColor ,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(100),
           ),
