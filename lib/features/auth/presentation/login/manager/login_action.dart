@@ -4,6 +4,7 @@ sealed class LoginScreenAction {}
 
 class LoginAction extends LoginScreenAction {
   final LoginRequestEntity request;
+  bool isRememberMe;
 
-  LoginAction(this.request);
+  LoginAction(this.request, this.isRememberMe);
 }

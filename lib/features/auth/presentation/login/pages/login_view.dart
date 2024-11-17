@@ -21,6 +21,7 @@ class _LoginViewState extends State<LoginView> {
   late var emailController;
   late var passwordController;
   final formKey = GlobalKey<FormState>();
+  bool rememberMe = false;
 
   @override
   void initState() {
@@ -57,6 +58,11 @@ class _LoginViewState extends State<LoginView> {
                   formKey: formKey,
                   passwordController: passwordController,
                   emailController: emailController,
+                  onRememberMeChanged: (bool value) {
+                    setState(() {
+                      rememberMe = value; // Update rememberMe value
+                    });
+                  },
                 ),
                 SliverToBoxAdapter(
                   child: verticalSpacing(70),
@@ -65,6 +71,7 @@ class _LoginViewState extends State<LoginView> {
                   emailController: emailController,
                   passwordController: passwordController,
                   formKey: formKey,
+                  rememberMe: rememberMe, // Pass the rememberMe value
                 ),
               ],
             ),

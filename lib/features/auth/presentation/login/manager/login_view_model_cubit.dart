@@ -32,8 +32,14 @@ class LoginViewModel extends Cubit<LoginViewModelState> {
     var result = await _authUseCase.login(action.request);
     switch (result) {
       case Success<LoginResponseEntity>():
-        emit(LoginViewModelSuccess(result.data));
-        await _offlineDataSource.cacheToken(result.data.token ?? "");
+        {
+          if (action.isRememberMe) {
+            await _offlineDataSource.cacheToken(result.data.token ?? "");
+            print("token ${await _offlineDataSource.getToken()}");
+          }
+
+          emit(LoginViewModelSuccess(result.data));
+        }
       case Fail<LoginResponseEntity>():
         emit(LoginViewModelError(ErrorHandler.handle(result.exception!)));
     }
