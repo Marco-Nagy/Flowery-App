@@ -36,7 +36,7 @@ class SignupForm extends StatelessWidget {
                 }
               case SignupSuccess():
                 {
-                  CustomToast.showLoadingToast(
+                  CustomToast.showSuccessToast(
                       message: "Sign up successfully");
                   // Navigator.pushNamed(context, RoutesName.homeView);
                   break;

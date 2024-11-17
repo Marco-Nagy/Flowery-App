@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
 import 'package:flowery_e_commerce/features/auth/data/model/response/signup_response_dto.dart';
 import 'package:flowery_e_commerce/features/auth/domain/usecase/auth_usecase.dart';
 import 'package:flutter/material.dart';
@@ -44,63 +43,22 @@ class SignupCubit extends Cubit<SignupState> {
     emit(SignupGenderSelected(selectedGender));
   }
 
-  // void _signUp(SignUpEntity signUpEntity) async {
-  //   emit(SignupLoading());
-  //   var result = await _authUseCase.signUp(signUpEntity);
-  //
-  //   switch (result) {
-  //     case Success<SignUPResponseDto>():
-  //       emit(SignupSuccess(result.data!));
-  //       break;
-  //     case Fail<SignUPResponseDto>():
-  //       final exception = result.exception;
-  //       emit(SignupError( exception: exception));
-  //
-  //       break;
-  //   }
-  // }
-
-  Future<void> _signUp(SignUpEntity signUpEntity) async {
+  void _signUp(SignUpEntity signUpEntity) async {
     emit(SignupLoading());
-    try {
-      var result = await _authUseCase.signUp(signUpEntity);
+    var result = await _authUseCase.signUp(signUpEntity);
 
-      switch (result) {
-        case Success<SignUPResponseDto>():
-        // Handle success
-          emit(SignupSuccess(result.data!));
-          break;
+    switch (result) {
+      case Success<SignUPResponseDto>():
+        emit(SignupSuccess(result.data!));
+        break;
+      case Fail<SignUPResponseDto>():
+        final exception = result.exception;
+        emit(SignupError( exception: exception));
 
-        case Fail<SignUPResponseDto>():
-          final exception = result.exception;
-
-          if (exception is DioError) {
-            switch (exception.response?.statusCode) {
-              case 400:
-                emit(SignupError(exception : exception.response?.data['error'] ?? 'Bad Request'));
-                break;
-              case 401:
-                emit(SignupError(exception : exception.response?.data['error'] ?? 'Unauthorized'));
-                break;
-              case 409:
-                emit(SignupError(exception : exception.response?.data['error'] ?? 'Conflict: User already exists'));
-                break;
-              case 500:
-                emit(SignupError(exception : 'Internal Server Error. Please try again later.'));
-                break;
-              default:
-                emit(SignupError(exception : 'Unexpected error: ${exception.response?.data['error'] ?? 'Unknown error'}'));
-                break;
-            }
-          } else {
-            emit(SignupError(exception : result.exception.toString() ?? 'Unknown error'));
-          }
-          break;
-      }
-    } catch (e) {
-      emit(SignupError(exception: e.toString()));
+        break;
     }
   }
+
 
 
   void _signUpButtonPressed() {
