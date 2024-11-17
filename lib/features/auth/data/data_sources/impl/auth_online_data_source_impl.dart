@@ -15,7 +15,7 @@ class AuthOnlineDataSourceImpl implements AuthOnlineDataSource {
   AuthOnlineDataSourceImpl(this._apiManager);
 
   @override
-  Future<ApiResult<LoginResponseEntity>> login(
+  Future<DataResult<LoginResponseEntity>> login(
       LoginRequestEntity request) async {
     return await executeApi(() async {
       var response = await _apiManager.login(AuthMapper.toDto(request));

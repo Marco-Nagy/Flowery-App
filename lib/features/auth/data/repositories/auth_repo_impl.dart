@@ -15,7 +15,7 @@ class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(this._onlineDataSource);
 
   @override
-  Future<ApiResult<LoginResponseEntity>> login(
+  Future<DataResult<LoginResponseEntity>> login(
       LoginRequestEntity request) async {
     var result = await _onlineDataSource.login(request);
     return result;

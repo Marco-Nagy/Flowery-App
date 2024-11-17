@@ -12,7 +12,7 @@ class AuthUseCase {
   @factoryMethod
   AuthUseCase(this._authRepository);
 
-  Future<ApiResult<LoginResponseEntity>> login(
+  Future<DataResult<LoginResponseEntity>> login(
       LoginRequestEntity request) async {
     print("thirrrrrrrrrrrrrrrrrd");
     return await _authRepository.login(request);
