@@ -51,8 +51,7 @@ class _OccasionViewState extends State<OccasionView> {
   Widget build(BuildContext context) {
     CartViewModelCubit cartViewModelCubit = context.read<CartViewModelCubit>();
 
-    // Function(GlobalKey) onClick =
-    // Key for Cart Icon
+
     return AddToCartAnimation(
       cartKey: cartViewModelCubit.cartKey,
       height: 30,

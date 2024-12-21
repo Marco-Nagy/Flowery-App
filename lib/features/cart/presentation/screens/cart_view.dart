@@ -31,11 +31,13 @@ class _CartViewState extends State<CartView> {
         switch (state) {
           case GetUserCartDataSuccess():
             return state.cartData.cartList.isNotEmpty? CartViewBody(
+              isBackButtonVisible: false,
               cart: state.cartData,
             ):const EmptyCartScreen();          case UpdateCartProductQuantitySuccess():
             break;
           case RemoveProductFromCartSuccess():
             return cartViewModel.cartData!.cartList.isNotEmpty? CartViewBody(
+              isBackButtonVisible: false,
               cart: cartViewModel.cartData!,
             ):const EmptyCartScreen();
           case AddProductToCartSuccess():
@@ -48,6 +50,7 @@ class _CartViewState extends State<CartView> {
           case CartViewModelInitial():
         }
         return  CartViewBody(
+          isBackButtonVisible: false,
           cart: context.read<CartViewModelCubit>().cartData!,
         );
       }, listener: (BuildContext context, CartViewModelState state) {

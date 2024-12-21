@@ -11,15 +11,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CartViewBody extends StatelessWidget {
-  const CartViewBody({super.key, required this.cart});
+   CartViewBody({super.key, required this.cart,required this.isBackButtonVisible});
 final CartEntity cart;
+final bool isBackButtonVisible ;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: customAppBar(
         appBarTxt: 'Cart (${cart.numOfCartItems} Items) ',
-        showArrow: true,
+        showArrow: isBackButtonVisible,
         context: context,
       ),
       body: Column(
