@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flowery_e_commerce/features/address_details/data/models/response/add_address_response_dto.dart';
+import 'package:flowery_e_commerce/features/address/data/models/response/saved_address_response_entity_dto_entity.dart';
 import 'package:flowery_e_commerce/features/auth/data/models/request/forget_password_request_dto.dart';
 import 'package:flowery_e_commerce/features/auth/data/models/request/reset_password_request_dto.dart';
 import 'package:flowery_e_commerce/features/auth/data/models/request/verify_reset_code_request_dto.dart';
@@ -24,6 +26,7 @@ import 'package:injectable/injectable.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 
+import '../../../features/address_details/data/models/request/add_address_request_dto.dart';
 import '../../../features/auth/data/models/request/login_request_dto.dart';
 import '../../../features/auth/data/models/request/signup_request_dto.dart';
 import '../../../features/auth/data/models/response/login_response_dto.dart';
@@ -95,6 +98,9 @@ abstract class ApiManager {
   @GET(ApiConstants.cart)
   Future<CartResponseDto> getCartData();
 
+  @GET(ApiConstants.getLoggedUserAddresses)
+  Future<SavedAddressResponseEntityDtoEntity> getSavedAddresses();
+
   @DELETE(ApiConstants.cart)
   Future<String> clearCartItems();
   @PUT(ApiConstants.editProfile)
@@ -112,4 +118,8 @@ abstract class ApiManager {
 // @MultiPart()
 // Future<UploadPhotoResponseDto> uploadPhoto(
 // @Body() File formData,);
+
+  @PATCH(ApiConstants.addAddress)
+  Future<AddAddressResponseDto> addAddress(
+      @Body() AddAddressRequestDto request);
 }

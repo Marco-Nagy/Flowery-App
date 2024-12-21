@@ -9,8 +9,11 @@ import 'package:flowery_e_commerce/features/profile/presentation/viewModel/profi
 import 'package:flowery_e_commerce/features/profile/presentation/viewModel/profile_view_model_cubit.dart';
 import 'package:flowery_e_commerce/features/profile/presentation/widgets/custom_picture_main_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../../generated/assets.dart';
 
 class CustomMainProfileData extends StatefulWidget {
   const CustomMainProfileData({super.key});
@@ -35,7 +38,7 @@ class _CustomMainProfileDataState extends State<CustomMainProfileData> {
            case ProfileViewModelInitial():
              
            case GetLoggedUserDataLoading():
-             const AppLoader();
+           return const AppLoader();
            case GetLoggedUserDataSuccess():
              return Column(
                children: [
@@ -59,7 +62,7 @@ class _CustomMainProfileDataState extends State<CustomMainProfileData> {
                        child: SizedBox(
                            width: 24.w,
                            height: 24.w,
-                           child: Image.asset('assets/images/pen.png')),
+                           child: Image.asset(Assets.imagesPen)),
                      ),
                    ],
                  ),
@@ -75,7 +78,14 @@ class _CustomMainProfileDataState extends State<CustomMainProfileData> {
                ],
              );
            case GetLoggedUserDataError():
-             aweSnackBar(msg: 'Error', context: context, type:MessageTypeConst.failure);
+             SchedulerBinding.instance.addPostFrameCallback((_) {
+               aweSnackBar(
+                 msg: AppLocalizations.of(context)!.error,
+                 context: context,
+                 type: MessageTypeConst.failure,
+               );
+             });
+
            case EditProfileLoading():
              
            case EditProfileSuccess():

@@ -1,5 +1,7 @@
+import 'package:flowery_e_commerce/core/routes/app_routes.dart';
 import 'package:flowery_e_commerce/core/styles/colors/my_colors.dart';
 import 'package:flowery_e_commerce/core/styles/fonts/my_fonts.dart';
+import 'package:flowery_e_commerce/core/utils/extension/navigation.dart';
 import 'package:flowery_e_commerce/features/auth/presentation/logout/widgets/logout_dialog.dart';
 import 'package:flowery_e_commerce/features/profile/presentation/widgets/custom_app_bar_of_profile_main_screen.dart';
 import 'package:flowery_e_commerce/features/profile/presentation/widgets/custom_main_profile_data.dart';
@@ -7,6 +9,11 @@ import 'package:flowery_e_commerce/features/profile/presentation/widgets/custom_
 import 'package:flowery_e_commerce/generated/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import '../../../../core/models/language.dart';
+import '../../../../core/provider/language_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class ProfileMainScreen extends StatefulWidget {
   const ProfileMainScreen({super.key});
@@ -18,6 +25,7 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: MyColors.white,
       appBar: AppBar(
         actions: const [
           CustomAppBarOfProfileMainScreen(),
@@ -46,14 +54,16 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                     width: 3.sp,
                   ),
                   Text(
-                    'My orders',
+                    AppLocalizations.of(context)!.my_orders,
                     style: MyFonts.styleRegular400_16.copyWith(
                       color: MyColors.blackBase,
                     ),
                   ),
                   const Spacer(),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      context.pushNamed(AppRoutes.orderView);
+                    },
                     child: SizedBox(
                         width: 20.w,
                         height: 20.w,
@@ -79,14 +89,16 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                     width: 3.sp,
                   ),
                   Text(
-                    'Saved address',
+                    AppLocalizations.of(context)!.saved_address,
                     style: MyFonts.styleRegular400_16.copyWith(
                       color: MyColors.blackBase,
                     ),
                   ),
                   const Spacer(),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      context.pushNamed(AppRoutes.savedAddressScreen);
+                    },
                     child: SizedBox(
                         width: 20.w,
                         height: 20.w,
@@ -116,47 +128,59 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
               height: 150.h,
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      SizedBox(
-                          width: 20.w,
-                          height: 20.w,
-                          child: Image.asset(Assets.imagesLanguage)),
-                      SizedBox(
-                        width: 5.w,
+              Row(
+              children: [
+              SizedBox(
+              width: 20.w,
+                height: 20.w,
+                child: Image.asset(Assets.imagesLanguage),
+              ),
+              SizedBox(width: 5.w),
+              Text(
+                AppLocalizations.of(context)!.language,
+                style: MyFonts.styleRegular400_16.copyWith(
+                  color: MyColors.blackBase,
+                ),
+              ),
+              const Spacer(),
+              InkWell(
+                onTap: () {
+                  final currentLanguage = context.read<LanguageProvider>().selectedLanguage;
+                  final newLanguage = currentLanguage.code == 'en'
+                      ? Language(code: 'ar')
+                      : Language(code: 'en');
+                  context.read<LanguageProvider>().changeLanguage(newLanguage);
+                },
+                child: Consumer<LanguageProvider>(
+                  builder: (context, provider, _) {
+                    return Text(
+                      provider.selectedLanguage.code == 'en' ? AppLocalizations.of(context)!.english : AppLocalizations.of(context)!.arabic,
+                      style: MyFonts.styleRegular400_14.copyWith(
+                        color: MyColors.baseColor,
                       ),
-                      Text(
-                        'Language',
-                        style: MyFonts.styleRegular400_16.copyWith(
-                          color: MyColors.blackBase,
-                        ),
-                      ),
-                      const Spacer(),
-                      InkWell(
-                        onTap: () {},
-                        child: Text(
-                          'English',
-                          style: MyFonts.styleRegular400_14.copyWith(
-                            color: MyColors.baseColor,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    );
+                  },
+                ),
+              ),
+              ],
+            ),
                   SizedBox(
                     height: 25.h,
                   ),
                   Row(
                     children: [
                       Text(
-                        'About us',
+                        AppLocalizations.of(context)!.about_app,
                         style: MyFonts.styleRegular400_16.copyWith(
                           color: MyColors.blackBase,
                         ),
                       ),
                       const Spacer(),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          context.pushNamed(AppRoutes.aboutAppView);
+
+                        },
                         child: SizedBox(
                             width: 20.w,
                             height: 20.w,
@@ -172,14 +196,16 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                   Row(
                     children: [
                       Text(
-                        'Terms & conditions',
+                        AppLocalizations.of(context)!.terms_and_conditions,
                         style: MyFonts.styleRegular400_16.copyWith(
                           color: MyColors.blackBase,
                         ),
                       ),
                       const Spacer(),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushNamed(context,AppRoutes.termsAndConditionsPage);
+                        },
                         child: SizedBox(
                             width: 20.w,
                             height: 20.w,
@@ -212,7 +238,7 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                     width: 5.w,
                   ),
                   Text(
-                    'Logout',
+                    AppLocalizations.of(context)!.logout,
                     style: MyFonts.styleRegular400_16.copyWith(
                       color: MyColors.blackBase,
                     ),
@@ -231,13 +257,6 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> {
                   ),
                 ],
               ),
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
-            Text(
-              'v 6.3.0 - (446)',
-              style: MyFonts.styleRegular400_12.copyWith(color: MyColors.grey),
             ),
           ],
         ),

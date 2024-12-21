@@ -2,12 +2,12 @@ import 'package:flowery_e_commerce/core/routes/app_routes.dart';
 import 'package:flowery_e_commerce/core/utils/extension/navigation.dart';
 import 'package:flowery_e_commerce/core/utils/widgets/base/app_loader.dart';
 import 'package:flowery_e_commerce/core/utils/widgets/base/base_view.dart';
-import 'package:flowery_e_commerce/core/utils/widgets/base/custom_app_bar.dart';
+import 'package:flowery_e_commerce/core/utils/widgets/custom_appbar.dart';
 import 'package:flowery_e_commerce/core/utils/widgets/spacing.dart';
 import 'package:flowery_e_commerce/di/di.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../../core/utils/widgets/base/snack_bar.dart';
 import '../viewModel/login_view_model_cubit.dart';
 import '../widgets/footer_sign_up.dart';
@@ -59,8 +59,8 @@ class _LoginViewState extends State<LoginView> {
               return BaseView(
                 child: CustomScrollView(
                   slivers: [
-                    const SliverToBoxAdapter(
-                      child: CustomAppBar(appBarTxt: "Login"),
+                     SliverToBoxAdapter(
+                      child: customAppBar(appBarTxt: AppLocalizations.of(context)!.login,context: context),
                     ),
                     SliverToBoxAdapter(
                       child: verticalSpacing(20),
@@ -71,7 +71,7 @@ class _LoginViewState extends State<LoginView> {
                       emailController: emailController,
                       onRememberMeChanged: (bool value) {
                         setState(() {
-                          rememberMe = value; // Update rememberMe value
+                          rememberMe = value;
                         });
                       },
                     ),
@@ -82,7 +82,7 @@ class _LoginViewState extends State<LoginView> {
                       emailController: emailController,
                       passwordController: passwordController,
                       formKey: formKey,
-                      rememberMe: rememberMe, // Pass the rememberMe value
+                      rememberMe: rememberMe,
                     ),
                     SliverToBoxAdapter(
                       child: verticalSpacing(20),
@@ -98,10 +98,10 @@ class _LoginViewState extends State<LoginView> {
             case LoginViewModelSuccess():
               context.pushReplacementNamed(AppRoutes.homeScreen);
               aweSnackBar(
-                  msg: 'Success',
+                  msg:  AppLocalizations.of(context)!.success,
                   context: context,
                   type: MessageTypeConst.success,
-                  title: 'Success');
+                  title: AppLocalizations.of(context)!.success);
               break;
             case LoginViewModelError():
               debugPrint(state.errorMessage.error);
@@ -109,7 +109,7 @@ class _LoginViewState extends State<LoginView> {
                   msg: state.errorMessage.error!,
                   context: context,
                   type: MessageTypeConst.failure,
-                  title: 'Error');
+                  title: AppLocalizations.of(context)!.error);
             case LoginViewModelLoading():
             default:
               return;

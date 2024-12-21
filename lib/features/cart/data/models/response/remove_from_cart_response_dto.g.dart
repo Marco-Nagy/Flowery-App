@@ -35,7 +35,6 @@ RemoveFromCartResponse _$RemoveFromCartResponseFromJson(
     );
 
 
-
 CartItemsResponse _$CartItemsResponseFromJson(Map<String, dynamic> json) =>
     CartItemsResponse(
       json['product'] as String?,
