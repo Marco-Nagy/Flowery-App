@@ -14,3 +14,4 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+[![codecov](https://codecov.io/github/Marco-Nagy/flowery_app/graph/badge.svg?token=GVVWT7Q6N6)](https://codecov.io/github/Marco-Nagy/flowery_app)
