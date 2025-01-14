@@ -25,7 +25,8 @@ Below are the app's screenshots that highlight its functionality:
 
 Watch the demo video of Flowery App below:
 
-[![Watch the Demo Video](https://i9.ytimg.com/vi_webp/bP0BNKABzG8/mq1.webp?sqp=CJikkrwG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGH8gHihIMA8=&rs=AOn4CLDqE8SmVnblvtgkv2alGvf1HpFf1A)](https://youtu.be/bP0BNKABzG8?si=MnV4__MUga5ae5cM)
+[![image](https://github.com/user-attachments/assets/28051196-9959-44bb-9f01-fedd335e3d04)
+](https://youtu.be/bP0BNKABzG8?si=MnV4__MUga5ae5cM)
 
 ---
 
