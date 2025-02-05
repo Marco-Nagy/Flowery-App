@@ -187,7 +187,7 @@ class AppRoutes {
       case AppRoutes.orderView:
         return BaseRoute(page: BlocProvider(
             create: (context) => getIt.get<OrderCubit>()
-              ..doAction(GetOrders()),
+    ..doAction(GetOrders('inProgress') ),
             child: const OrderView()));
       case AppRoutes.mapView:
         return BaseRoute(page: const MapView());
@@ -218,8 +218,8 @@ class AppRoutes {
           return BaseRoute(page: BlocProvider(
     create: (context) => getIt.get<TrackOrderViewModelCubit>()
     ..doAction(GetOrderDetails(
-    orderId: arguments!['orderId']!, userId: arguments['userId']!)),
-   child: const TrackOrderScreen()));
+    orderId: arguments['orderId']!, userId: arguments['userId']!)),
+   child: TrackOrderScreen(orderId: arguments!['orderId']!, userId: arguments['userId']!)));
       default:
         return BaseRoute(page: const PageUnderBuildScreen());
     }
